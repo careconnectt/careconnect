@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 3: App Architecture and TGA Compliance Pathway</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+        }
+        
+        .figure-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .figure-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .architecture-side {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+        }
+        
+        .compliance-side {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .arch-layer {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .arch-layer:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .layer-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .layer-icon {
+            font-size: 20px;
+        }
+        
+        .layer-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .component {
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .compliance-timeline {
+            position: relative;
+        }
+        
+        .timeline-item {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .timeline-step {
+            background: #f1c40f;
+            color: #2c3e50;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+            top: 15px;
+        }
+        
+        .timeline-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-left: 20px;
+        }
+        
+        .timeline-description {
+            font-size: 12px;
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+        
+        .tga-logo {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .timeline-duration {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .integration-flow {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .flow-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .flow-element {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .flow-arrow {
+            font-size: 24px;
+            color: #f1c40f;
+        }
+        
+        .security-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="figure-container">
+        <div class="figure-title">
+            Figure 3: App Architecture and TGA Compliance Pathway
+        </div>
+        
+        <div class="main-content">
+            <!-- Architecture Side -->
+            <div class="architecture-side">
+                <div class="section-title">🏗️ TECHNICAL ARCHITECTURE</div>
+                
+                <div class="architecture-layers">
+                    <div class="arch-layer">
+                        <div class="security-badge">🔒 SECURE</div>
+                        <div class="layer-title">
+                            <span class="layer-icon">📱</span>
+                            User Interface Layer
+                        </div>
+                        <div class="layer-components">
+                            <div class="component">Mobile App Interface</div>
+                            <div class="component">Photo/Video Capture</div>
+                            <div class="component">Symptom Forms</div>
+                            <div class="component">Visual Pain Scales</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <div class="security-badge">🧠 AI</div>
+                        <div class="layer-title">
+                            <span class="layer-icon">⚙️</span>
+                            Processing Layer
+                        </div>
+                        <div class="layer-components">
+                            <div class="component">AI Pattern Recognition</div>
+                            <div class="component">Medical Translation</div>
+                            <div class="component">Data Validation</div>
+                            <div class="component">Encryption Protocols</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <div class="security-badge">🔗 API</div>
+                        <div class="layer-title">
+                            <span class="layer-icon">🔌</span>
+                            Integration Layer
+                        </div>
+                        <div class="layer-components">
+                            <div class="component">Healthcare APIs</div>
+                            <div class="component">Digital Health Infrastructure</div>
+                            <div class="component">Clinician Dashboard</div>
+                            <div class="component">Patient Data Management</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <div class="security-badge">🛡️ ENCRYPTED</div>
+                        <div class="layer-title">
+                            <span class="layer-icon">💾</span>
+                            Data Layer
+                        </div>
+                        <div class="layer-components">
+                            <div class="component">Encrypted Patient Storage</div>
+                            <div class="component">Health Pattern Database</div>
+                            <div class="component">Clinical Validation Data</div>
+                            <div class="component">Audit Logs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compliance Side -->
+            <div class="compliance-side">
+                <div class="section-title">📋 TGA COMPLIANCE PATHWAY</div>
+                
+                <div class="tga-logo">
+                    <div style="font-size: 24px; font-weight: bold;">🏛️ TGA</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Therapeutic Goods Administration</div>
+                </div>
+                
+                <div class="compliance-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-step">1</div>
+                        <div class="timeline-title">SaMD Classification Assessment</div>
+                        <div class="timeline-description">Software as Medical Device evaluation - targeting Class I lower-risk classification for communication enhancement tools</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">2</div>
+                        <div class="timeline-title">Pre-submission Consultation</div>
+                        <div class="timeline-description">Early engagement with TGA to clarify requirements and regulatory pathway for AI-powered healthcare communication tools</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">3</div>
+                        <div class="timeline-title">Clinical Evidence Compilation</div>
+                        <div class="timeline-description">Gathering validation studies, user testing results, and clinical utility evidence for communication enhancement</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">4</div>
+                        <div class="timeline-title">Quality Management System</div>
+                        <div class="timeline-description">Implementing ISO 13485 compliant quality systems, risk management, and post-market surveillance protocols</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">5</div>
+                        <div class="timeline-title">TGA Application Submission</div>
+                        <div class="timeline-description">Formal submission with comprehensive documentation, clinical evidence, and quality system certification</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-step">6</div>
+                        <div class="timeline-title">Assessment & Approval</div>
+                        <div class="timeline-description">TGA review process including technical assessment, clinical evaluation, and final approval decision</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-duration">
+                    ⏱️ Estimated Timeline: 12-18 Months
+                </div>
+            </div>
+        </div>
+        
+        <div class="integration-flow">
+            <div class="flow-title">🔄 SYSTEM INTEGRATION FLOW</div>
+            <div class="flow-diagram">
+                <div class="flow-element">
+                    <div style="font-size: 20px; margin-bottom: 8px;">📱</div>
+                    <strong>Patient App</strong><br>
+                    <small>Data Collection</small>
+                </div>
+                
+                <div class="flow-arrow">→</div>
+                
+                <div class="flow-element">
+                    <div style="font-size: 20px; margin-bottom: 8px;">🧠</div>
+                    <strong>AI Processing</strong><br>
+                    <small>Pattern Analysis</small>
+                </div>
+                
+                <div class="flow-arrow">→</div>
+                
+                <div class="flow-element">
+                    <div style="font-size: 20px; margin-bottom: 8px;">🔗</div>
+                    <strong>Healthcare APIs</strong><br>
+                    <small>System Integration</small>
+                </div>
+                
+                <div class="flow-arrow">→</div>
+                
+                <div class="flow-element">
+                    <div style="font-size: 20px; margin-bottom: 8px;">👨‍⚕️</div>
+                    <strong>Clinician Interface</strong><br>
+                    <small>Enhanced Consultation</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
